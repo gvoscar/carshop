@@ -44,12 +44,39 @@ class DB {
       await db.execute('CREATE TABLE Vehicles ('
           'id INTEGER PRIMARY KEY,'
           'photoUrl TEXT,'
+          'occupants INTEGER,'
           'price REAL,'
           'used INTEGER,'
           'model TEXT,'
           'createAt INTEGER,'
-          'categoryId INTEGER'
+          'categoryId TEXT,'
+          'extra TEXT,'
+          'extraValue TEXT'
           ')');
+
+      Category electrico = new Category();
+      electrico.name = 'Eléctrico';
+      electrico.write = 1;
+      electrico.read = 1;
+      electrico.edit = 0;
+
+      await db.insert('Categories', electrico.toJson());
+
+      Category camion = new Category();
+      camion.name = 'Camión';
+      camion.write = 1;
+      camion.read = 1;
+      camion.edit = 1;
+
+      await db.insert('Categories', camion.toJson());
+
+      Category comercial = new Category();
+      comercial.name = 'Comercial';
+      comercial.write = 1;
+      comercial.read = 1;
+      comercial.edit = 1;
+
+      await db.insert('Categories', comercial.toJson());
     });
   }
 
@@ -71,9 +98,17 @@ class DB {
     return res;
   }
 
+  Future<int> actualizarCategoria(Category category) async {
+    final db = await database;
+    final res = await db.update('Categories', category.toJson(),
+        where: 'id=?', whereArgs: [category.id]);
+    return res;
+  }
+
   Future<Category> consultarCategoria(String id) async {
     final db = await database;
-    final res = await db.query('Categories', where: 'id=?', whereArgs: [id]);
+    final res =
+        await db.query('Categories', where: 'id=?', whereArgs: [int.parse(id)]);
     return (res.isNotEmpty) ? Category.fromJson(res.first) : null;
   }
 
@@ -88,6 +123,13 @@ class DB {
   Future<int> crearVehiculo(Vehicle vehicle) async {
     final db = await database;
     final res = await db.insert('Vehicles', vehicle.toJson());
+    return res;
+  }
+
+  Future<int> actualizarVehiculo(Vehicle vehicle) async {
+    final db = await database;
+    final res = await db.update('Vehicles', vehicle.toJson(),
+        where: 'id=?', whereArgs: [vehicle.id]);
     return res;
   }
 

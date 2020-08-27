@@ -1,5 +1,6 @@
 import 'package:carshop/src/configs/user_preferences.dart';
 import 'package:carshop/src/features/categories/pages/categories_page.dart';
+import 'package:carshop/src/features/vehicles/pages/vehicle_page.dart';
 import 'package:carshop/src/features/vehicles/pages/vehicles_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,9 +21,9 @@ class _HomePageState extends State<HomePage> {
         title: Text('CarShop'),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.delete_forever),
+              icon: Icon(Icons.playlist_add),
               onPressed: () {
-                //scansBloc.borrarScansTODOS();
+                Navigator.pushNamed(context, 'category');
               })
         ],
       ),
@@ -73,6 +74,7 @@ class _HomePageState extends State<HomePage> {
       child: Icon(Icons.add_circle_outline),
       onPressed: () {
         //=> _scanQR(context)
+        Navigator.pushNamed(context, 'vehicle');
       },
       backgroundColor: Theme.of(context).accentColor,
     );

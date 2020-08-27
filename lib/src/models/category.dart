@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class Category {
-  Category({this.id, this.name, this.read, this.write, this.edit});
+  Category({this.id, this.name, this.read = 0, this.write = 0, this.edit = 0});
 
   int id;
   String name;
